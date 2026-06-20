@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Inspect log files (compressed eval logs)
+logs/
+*.eval
+
+# Secrets — never commit
+.env
+
+# Private / not-for-public — working notes, draft material
+.private/
+
+# Living project reference — private working doc
+CLAUDE.md

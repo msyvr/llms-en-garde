@@ -1,0 +1,7 @@
+[project]
+name = "llms-en-garde"
+version = "0.1.0"
+description = "Judge-free, by-construction measurement of whether LLMs take fewer covert rule-violating shortcuts when they believe they are being evaluated — across a capability ladder."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
