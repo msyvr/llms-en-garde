@@ -4,7 +4,10 @@ AI safety leans on evaluations to catch misbehavior before deployment. That load
 assumption cracks if a model behaves differently when it believes it is being evaluated than
 when it believes it is in ordinary use — and it cracks where it matters most, since recognizing
 an evaluation is itself a capability that grows as models improve. A model that is "en garde" —
-on its best behavior under observation — can pass the very tests meant to catch it.
+on its best behavior under observation — can pass the very tests meant to catch it. The broader
+pattern this taps — a model reasoning about oversight and adjusting, whether or not it can tell
+which setting it is in — is what Schoen & Nitishinskaya (2026) term
+[_metagaming_](https://alignment.openai.com/metagaming).
 
 This project measures that gap directly: whether a model takes fewer covert, rule-violating
 shortcuts under an _evaluation_ framing than under a _deployment_ framing — read from behavior
@@ -29,7 +32,8 @@ Holding the task fixed, only the framing the model reads varies: an evaluation c
 stated benchmark, logged output, a reviewer in the loop) against a deployment context. The
 cheating rate is compared within-task across framings, the eval cue is decomposed to see which
 part carries any effect, and the contrast is traced up a reasoning-model capability ladder.
-Because the signal is behavioral, it does not rely on trusting a reasoning trace or a judge model.
+Because the signal is behavioral, it does not rely on trusting a reasoning trace or a judge model —
+the channels through which this behavior is usually read.
 
 ## Substrate: ImpossibleBench
 
