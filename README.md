@@ -1,4 +1,4 @@
-# llms-en-garde
+# LLMs en garde: ain't misbehavin'
 
 AI safety leans on evaluations to catch misbehavior before deployment. That load-bearing
 assumption cracks if a model behaves differently when it believes it is being evaluated than
@@ -9,52 +9,55 @@ pattern this taps — a model reasoning about oversight and adjusting, whether o
 which setting it is in — is what Schoen & Nitishinskaya (2026) term
 [_metagaming_](https://alignment.openai.com/metagaming).
 
-This project measures that gap directly: whether a model takes fewer covert, rule-violating
-shortcuts under an _evaluation_ framing than under a _deployment_ framing — read from behavior
-rather than from the model's chain-of-thought or a grader model — and how the gap moves as
-capability scales.
+This project measures one consequence directly, from behavior: the **evaluation-awareness
+discount** — how much a safety evaluation overstates safety because the model senses the
+evaluation. We turn that sense up and down and watch covert behavior move.
 
 ## The question
 
-Holding the task fixed, does covert rule-breaking drop under an evaluation framing relative to a
-deployment framing, and does that drop grow with capability? If it does, an evaluation can
-systematically understate how a model acts in deployment, and the understatement widens as models
-get better at recognizing evaluations — which bears directly on whether the evaluations behind a
-safety case can be trusted.
+If you dial a model's sense of being evaluated from deployment-like up to evaluation-like, how much
+does its covert rule-breaking drop? That gap is the discount — the amount an evaluation understates
+deployment misbehavior — and we ask whether it grows with capability. It bears directly on whether
+the evaluations behind a safety case can be trusted.
 
 ## Approach
 
-The outcome is judge-free and fixed by construction. On an "impossible" coding task — one whose
-unit test has been mutated to contradict its own specification — there is no legitimate way to
-pass, so any pass is a rule-violating shortcut, scored deterministically with no awareness judge.
+The outcome is judge-free and fixed by construction: on an "impossible" coding task — a unit test
+mutated to contradict its own specification — there is no legitimate way to pass, so any pass is a
+rule-violating shortcut, scored deterministically with no awareness judge.
 
-Holding the task fixed, only the framing the model reads varies: an evaluation context (e.g., a
-stated benchmark, logged output, a reviewer in the loop) against a deployment context. The
-cheating rate is compared within-task across framings, the eval cue is decomposed to see which
-part carries any effect, and the contrast is traced up a reasoning-model capability ladder.
-Because the signal is behavioral, it does not rely on trusting a reasoning trace or a judge model —
-the channels through which this behavior is usually read.
+Holding the task fixed, we vary the model's **eval-awareness as a dose** — steering that internal
+direction by a controlled, probe-measured amount — and read the by-construction cheating rate as a
+function of the dose. The discount is read off that dose-response curve. Steering the dose internally
+(rather than relying on a "you're being tested" cue, which a model recognizes from the task's format
+anyway) and reading a behavioral outcome (rather than a reasoning trace or a judge) is what keeps the
+measurement clean. It's an **evals × interpretability** study: a by-construction behavioral outcome
+measured against a steered, probe-checked internal dose.
+
+The discount it reports is specific to this setup; the **instrument and the question are the portable
+parts**. Design and analysis plan: [`docs/plan.md`](docs/plan.md).
 
 ## Substrate: ImpossibleBench
 
 [ImpossibleBench](https://arxiv.org/abs/2510.20270) (Zhong, Raghunathan & Carlini, 2025) supplies
-the impossible tasks and the deterministic cheating-rate scorer; it is an external tool this
-project builds on, not part of it. What this project adds is the eval-vs-deploy framing conditions
-and the analysis around them.
+the impossible tasks and the deterministic cheating-rate scorer; it is an external tool this project
+builds on, not part of it. What this project adds is the eval-awareness dose (steering with a
+probe-based manipulation check) and the discount it reads off.
 
 ## Relation to pants-on-fire-eval
 
 This project reuses the measurement approach developed in
 [pants-on-fire-eval](https://github.com/msyvr/pants-on-fire-eval) (PoF-E) — the within-task
-paired-statistics pipeline and the system-message condition-injection scaffold — pointed at
-evaluation awareness. The two are separate projects in separate repos: PoF-E decomposes a deployed
-anti-scheming specification; llms-en-garde measures the evaluation-vs-deployment behavior gap. The
-shared piece is the judge-free, by-construction measurement method.
+paired-statistics pipeline and the system-message scaffold — pointed at evaluation awareness. The
+two are separate projects in separate repos: PoF-E decomposes a deployed anti-scheming specification;
+llms-en-garde measures the evaluation-awareness discount. The shared piece is the judge-free,
+by-construction measurement method.
 
 ## Status
 
-Early-stage. The measurement approach and paired-statistics pipeline are carried over from PoF-E
-(validated there); the eval-vs-deploy conditions come next.
+Early-stage. The harness and paired-statistics pipeline are carried over from PoF-E (validated
+there); the design is in [`docs/plan.md`](docs/plan.md). New here: the eval-awareness dose (steering
++ probe manipulation check) and the discount readout.
 
 ## License
 
