@@ -75,7 +75,7 @@ first value, not a universal constant.
 
 - **Phase 0 — calibration gate.** Screen candidate open-weight reasoning models for in-band
   by-construction cheating and a usable eval-awareness direction; fix the model set, the dose grid, and
-  the awareness anchors. This is also where the optional near-frontier anchor is decided in or out.
+  the awareness anchors. This is also where the optional near-frontier anchor is decided in or out. Full spec: [`phase0-calibration-gate.md`](phase0-calibration-gate.md).
 - **Phase 1 — dose-response.** Per model: `c(d)` across the grid with the manipulation check; the
   discount (absolute paired difference) with an interval, plus the derived fraction.
 - **Phase 2 — capability read (light).** Whether the discount varies across the model set.
