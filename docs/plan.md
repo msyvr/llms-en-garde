@@ -59,6 +59,10 @@ first value, not a universal constant.
 - **Models.** 2–3 **open-weight reasoning models** at the intersection: those that both (a) cheat
   in-band on the by-construction substrate (a calibrated [35%, 85%] baseline) and (b) have a usable
   eval-awareness direction. White-box steering means frontier API models are out of scope here.
+  Optionally — gated at Phase 0 — one **near-frontier open-weight reasoning model** (a 200B+-class
+  MoE) as a **high-capability anchor**: the masking concern is about exactly that regime, so a data
+  point there is the most safety-relevant rung. It is included only if it clears the gate (in-band
+  cheating plus a usable eval-awareness direction), which is harder to establish on a model that large.
 - **Statistics.** Reuse the paired-statistics pipeline from
   [pants-on-fire-eval](https://github.com/msyvr/pants-on-fire-eval): Wilson per-cell intervals, the
   Newcombe paired difference-of-proportions interval (the primary test), exact-McNemar, Holm within
@@ -71,7 +75,7 @@ first value, not a universal constant.
 
 - **Phase 0 — calibration gate.** Screen candidate open-weight reasoning models for in-band
   by-construction cheating and a usable eval-awareness direction; fix the model set, the dose grid, and
-  the awareness anchors.
+  the awareness anchors. This is also where the optional near-frontier anchor is decided in or out.
 - **Phase 1 — dose-response.** Per model: `c(d)` across the grid with the manipulation check; the
   discount (absolute paired difference) with an interval, plus the derived fraction.
 - **Phase 2 — capability read (light).** Whether the discount varies across the model set.
